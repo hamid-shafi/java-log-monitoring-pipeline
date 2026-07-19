@@ -5,58 +5,65 @@ import ir.internship.logmonitor.model.LogLevel;
 import java.time.LocalDateTime;
 
 public class LogParser {
-    public static LogEvent parse(String LogFileName, String Line) {
-        String fileName = LogFileName;
+    public static LogEvent parse(String logFileName, String line) {
+        String fileName = logFileName;
 
 
-        LogFileName = LogFileName.substring(0, LogFileName.lastIndexOf('.'));
+        logFileName = logFileName.substring(0, logFileName.lastIndexOf('.'));
         String fileTimestampSample = "YYYY-MM-DD_HH-MM-SS";
         int lenOfFileTimestamp = fileTimestampSample.length();
-        String componentName = LogFileName.substring(0, LogFileName.length()-lenOfFileTimestamp+1);
+        String componentName = logFileName.substring(0, logFileName.length()-lenOfFileTimestamp+1);
         componentName = componentName.toUpperCase();
-        LogComponent component; // how to = componentName; ?
+        LogComponent component = LogComponent.valueOf(componentName);
 
 
-        // Line format: 2021-07-12 01:22:42,114 [ThreadName] INFO package.name.ClassName - msg
+        // line format: 2021-07-12 01:22:42,114 [ThreadName] INFO package.name.ClassName - msg
         LocalDateTime timestamp;
         int year, month, day, hour, minute, second, nano;
-        year = Integer.parseInt(Line.substring(0, Line.indexOf('-')));
-        Line = Line.substring(Line.indexOf('-') + 1);
+        year = Integer.parseInt(line.substring(0, line.indexOf('-')));
+        line = line.substring(line.indexOf('-') + 1);
 
-        month = Integer.parseInt(Line.substring(0, Line.indexOf('-')));
-        Line = Line.substring(Line.indexOf('-') + 1);
+        month = Integer.parseInt(line.substring(0, line.indexOf('-')));
+        line = line.substring(line.indexOf('-') + 1);
 
-        day = Integer.parseInt(Line.substring(0, Line.indexOf(' ')));
-        Line = Line.substring(Line.indexOf(' ') + 1);
+        day = Integer.parseInt(line.substring(0, line.indexOf(' ')));
+        line = line.substring(line.indexOf(' ') + 1);
 
-        hour = Integer.parseInt(Line.substring(0, Line.indexOf(':')));
-        Line = Line.substring(Line.indexOf(':') + 1);
+        hour = Integer.parseInt(line.substring(0, line.indexOf(':')));
+        line = line.substring(line.indexOf(':') + 1);
 
-        minute = Integer.parseInt(Line.substring(0, Line.indexOf(':')));
-        Line = Line.substring(Line.indexOf(':') + 1);
+        minute = Integer.parseInt(line.substring(0, line.indexOf(':')));
+        line = line.substring(line.indexOf(':') + 1);
 
-        second = Integer.parseInt(Line.substring(0, Line.indexOf(',')));
-        Line = Line.substring(Line.indexOf(',') + 1);
+        second = Integer.parseInt(line.substring(0, line.indexOf(',')));
+        line = line.substring(line.indexOf(',') + 1);
 
-        nano = Integer.parseInt(Line.substring(0, Line.indexOf(' '))) * 1000000;
-        Line = Line.substring(Line.indexOf(' ') + 1);
+        nano = Integer.parseInt(line.substring(0, line.indexOf(' '))) * 1000000;
+        line = line.substring(line.indexOf(' ') + 1);
 
         timestamp = LocalDateTime.of(year, month, day, hour, minute, second, nano);
 
-        String threadName = Line.substring(0, Line.indexOf(' '));
-        Line = Line.substring(Line.indexOf(' ') + 1);
+        String threadName = line.substring(0, line.indexOf(' '));
+        line = line.substring(line.indexOf(' ') + 1);
 
-        LogLevel level; // how to = Line.substring(0, Line.indexOf(' ')); ?
-        Line = Line.substring(Line.indexOf(' ') + 1);
+        LogLevel level = LogLevel.valueOf(line.substring(0, line.indexOf(' ')));
+        line = line.substring(line.indexOf(' ') + 1);
 
-        String className = Line.substring(0, Line.indexOf(' '));
-        Line = Line.substring(Line.indexOf(' '));
-        Line = Line.substring(3);
+        String className = line.substring(0, line.indexOf(' '));
+        line = line.substring(line.indexOf(' '));
+        // remove " - "
+        line = line.substring(3);
 
-        String message = Line;
+        String message = line;
 
-        LogEvent Log = LogEvent(timestamp, component, level, threadName, className, message, fileName);
-
-        return Log;
+        return new LogEvent(
+                timestamp,
+                component,
+                level,
+                threadName,
+                className,
+                message,
+                fileName
+        );
     }
 }
