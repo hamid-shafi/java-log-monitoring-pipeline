@@ -14,10 +14,7 @@ public class LogParser {
         return LogComponent.valueOf(componentName);
     }
 
-    public static LogEvent parse(String logFileName, String line) {
-        LogComponent component = getComponentName(logFileName);
-
-
+    public static LogEvent parse(LogComponent component, String line) {
         // line format: 2021-07-12 01:22:42,114 [ThreadName] INFO package.name.ClassName - msg
         LocalDateTime timestamp;
         int year, month, day, hour, minute, second, nano;
@@ -63,8 +60,7 @@ public class LogParser {
                 level,
                 threadName,
                 className,
-                message,
-                logFileName
+                message
         );
     }
 }

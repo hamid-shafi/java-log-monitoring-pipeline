@@ -9,7 +9,6 @@ public class LogEvent {
     private final String threadName;
     private final String className;
     private final String message;
-    private final String fileName;
 
     public LogEvent(
             LocalDateTime timestamp,
@@ -17,8 +16,7 @@ public class LogEvent {
             LogLevel level,
             String threadName,
             String className,
-            String message,
-            String fileName
+            String message
     ) {
         this.timestamp = timestamp;
         this.component = component;
@@ -26,7 +24,6 @@ public class LogEvent {
         this.threadName = threadName;
         this.className = className;
         this.message = message;
-        this.fileName = fileName;
     }
 
     public LocalDateTime getTimestamp() {
@@ -53,10 +50,6 @@ public class LogEvent {
         return message;
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
     @Override
     public String toString() {
         return "LogEvent{" +
@@ -66,7 +59,6 @@ public class LogEvent {
                 ", threadName='" + threadName + '\'' +
                 ", className='" + className + '\'' +
                 ", message='" + message + '\'' +
-                ", fileName='" + fileName + '\'' +
                 '}';
     }
 }

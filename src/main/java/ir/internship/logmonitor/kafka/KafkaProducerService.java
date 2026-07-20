@@ -1,6 +1,5 @@
 package ir.internship.logmonitor.kafka;
 
-import ir.internship.logmonitor.model.LogEvent;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
