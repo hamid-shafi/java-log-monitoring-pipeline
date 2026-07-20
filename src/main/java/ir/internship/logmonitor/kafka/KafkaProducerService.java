@@ -10,6 +10,7 @@ import java.util.Properties;
 
 public class KafkaProducerService {
     private final KafkaProducer<String, String> producer;
+
     public KafkaProducerService() {
         Properties pro = new Properties();
         pro.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");

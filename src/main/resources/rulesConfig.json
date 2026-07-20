@@ -1,0 +1,19 @@
+{
+  "singleLog": {
+    "enabled": true,
+    "level": "DEBUG"
+  },
+
+  "frequency": {
+    "enabled": true,
+    "level": "ERROR",
+    "windowSeconds": 300,
+    "threshold": 100
+  },
+
+  "rate": {
+    "enabled": true,
+    "windowSeconds": 200,
+    "threshold": 300
+  }
+}
