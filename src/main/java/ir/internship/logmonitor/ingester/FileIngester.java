@@ -1,19 +1,21 @@
 package ir.internship.logmonitor.ingester;
 
-import ir.internship.logmonitor.model.LogEvent;
+import ir.internship.logmonitor.LogParser;
+import ir.internship.logmonitor.kafka.KafkaProducerService;
 
 import java.io.File;
-import java.io.InterruptedIOException;
 import java.nio.file.*;
 import java.util.List;
 import java.io.IOException;
 
 public class FileIngester {
+    private final KafkaProducerService pro = new KafkaProducerService();
+
     public void processFile(File file) throws IOException {
         List<String> lines = Files.readAllLines(file.toPath());
         for (String line : lines) {
-            LogEvent logEvent = LogParser.parse(file.getName(), line);
-            // Kafka
+            String componentName = LogParser.getComponentName(file.getName()).name();
+            pro.send(componentName, line);
         }
         if (!(file.delete())) {
             System.out.println("ERR: Failed to delete " + file.getName());

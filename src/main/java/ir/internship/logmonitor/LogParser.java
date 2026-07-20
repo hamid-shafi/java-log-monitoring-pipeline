@@ -1,20 +1,21 @@
-package ir.internship.logmonitor.ingester;
+package ir.internship.logmonitor;
 import ir.internship.logmonitor.model.LogComponent;
 import ir.internship.logmonitor.model.LogEvent;
 import ir.internship.logmonitor.model.LogLevel;
 import java.time.LocalDateTime;
 
 public class LogParser {
-    public static LogEvent parse(String logFileName, String line) {
-        String fileName = logFileName;
-
-
+    public static LogComponent getComponentName(String logFileName) {
         logFileName = logFileName.substring(0, logFileName.lastIndexOf('.'));
         String fileTimestampSample = "YYYY-MM-DD_HH-MM-SS";
         int lenOfFileTimestamp = fileTimestampSample.length();
         String componentName = logFileName.substring(0, logFileName.length()-lenOfFileTimestamp+1);
         componentName = componentName.toUpperCase();
-        LogComponent component = LogComponent.valueOf(componentName);
+        return LogComponent.valueOf(componentName);
+    }
+
+    public static LogEvent parse(String logFileName, String line) {
+        LogComponent component = getComponentName(logFileName);
 
 
         // line format: 2021-07-12 01:22:42,114 [ThreadName] INFO package.name.ClassName - msg
@@ -63,7 +64,7 @@ public class LogParser {
                 threadName,
                 className,
                 message,
-                fileName
+                logFileName
         );
     }
 }
