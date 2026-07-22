@@ -2,6 +2,7 @@ services:
   kafka:
     image: apache/kafka:4.1.0
     container_name: kafka
+    restart: unless-stopped
     ports:
       - "9092:9092"
     environment:
@@ -14,3 +15,20 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: logmonitor
+      POSTGRES_USER: hamid
+      POSTGRES_PASSWORD: "1111"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+volumes:
+  postgres-data:
+  kafka-data:

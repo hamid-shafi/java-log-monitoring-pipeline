@@ -1,22 +1,32 @@
-{
-  "singleLog": {
-    "ruleName": "Single Log Alert",
-    "enabled": true,
+[
+  {
+    "type": "singleLog",
+    "ruleName": "Debug Logs",
     "level": "DEBUG"
   },
-
-  "frequency": {
-    "ruleName": "High Frequency Alert",
-    "enabled": true,
+  {
+    "type": "singleLog",
+    "ruleName": "Error Logs",
+    "level": "ERROR"
+  },
+  {
+    "type": "frequency",
+    "ruleName": "Too Many Errors",
     "level": "ERROR",
     "windowSeconds": 300,
     "threshold": 100
   },
-
-  "rate": {
-    "ruleName": "High Log Rate Alert",
-    "enabled": true,
+  {
+    "type": "frequency",
+    "ruleName": "Too Many Warnings",
+    "level": "WARN",
+    "windowSeconds": 60,
+    "threshold": 50
+  },
+  {
+    "type": "rate",
+    "ruleName": "High Rate",
     "windowSeconds": 200,
     "threshold": 300
   }
-}
+]
