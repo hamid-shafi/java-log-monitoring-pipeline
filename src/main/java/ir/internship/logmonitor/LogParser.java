@@ -41,7 +41,7 @@ public class LogParser {
 
         timestamp = LocalDateTime.of(year, month, day, hour, minute, second, nano);
 
-        String threadName = line.substring(0, line.indexOf(' '));
+        String threadName = line.substring(1, line.indexOf(' ')-1); // [ ] ×
         line = line.substring(line.indexOf(' ') + 1);
 
         LogLevel level = LogLevel.valueOf(line.substring(0, line.indexOf(' ')));

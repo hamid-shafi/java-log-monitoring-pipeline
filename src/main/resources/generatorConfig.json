@@ -1,0 +1,32 @@
+{
+  "_comment": "Available values: levels = {DEBUG, INFO, WARN, ERROR} | components = {AUTH, PAYMENT, ORDER, PRODUCT, NOTIFICATION, SYSTEM}",
+
+  "addBackupLogs": true,
+
+  "files": 5,
+
+  "totalLogs": 100,
+
+  "durationSeconds": 10,
+
+  "levels": [
+    "DEBUG",
+    "INFO",
+    "WARN",
+    "ERROR"
+  ],
+
+  "components": [
+    "AUTH",
+    "PAYMENT",
+    "ORDER"
+  ],
+
+  "classNames": [
+    "LoginService",
+    "PaymentService",
+    "OrderController"
+  ],
+
+  "seed": 1
+}
