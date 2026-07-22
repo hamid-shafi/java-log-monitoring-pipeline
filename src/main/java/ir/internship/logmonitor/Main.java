@@ -1,5 +1,6 @@
 package ir.internship.logmonitor;
 
+import ir.internship.logmonitor.Generator.LogGenerator;
 import ir.internship.logmonitor.api.Api;
 import ir.internship.logmonitor.ingester.FileIngester;
 import ir.internship.logmonitor.kafka.KafkaConsumerService;
@@ -9,6 +10,12 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        /*
+        LogGenerator gen = new LogGenerator();
+        gen.generate();
+*/
+
+
         FileIngester ingester = new FileIngester();
         KafkaConsumerService consumer = new KafkaConsumerService();
         Api api = new Api();

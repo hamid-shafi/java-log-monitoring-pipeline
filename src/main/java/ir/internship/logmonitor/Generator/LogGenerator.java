@@ -15,6 +15,7 @@ public class LogGenerator {
 
     private int files;
     private int totalLogs;
+    private LocalDateTime startTime;
     private int durationSeconds;
     private boolean addBackupLogs;
     private long seed;
@@ -37,23 +38,23 @@ public class LogGenerator {
         random = new Random(seed);
         logId = 0;
 
+        generateFiles();
+
         if (addBackupLogs)
             addBackupFiles();
-
-        generateFiles();
     }
 
     private void loadConfig() throws IOException {
         try (InputStream config = getClass().getClassLoader()
                 .getResourceAsStream("generatorConfig.json")) {
 
-            if (config == null)
-                throw new FileNotFoundException("generatorConfig.json not found");
-
             JsonNode root = mapper.readTree(config);
 
             files = root.get("files").asInt();
             totalLogs = root.get("totalLogs").asInt();
+            startTime = LocalDateTime.parse(
+                    root.get("startTime").asText()
+            );
             durationSeconds = root.get("durationSeconds").asInt();
             addBackupLogs = root.get("addBackupLogs").asBoolean();
             seed = root.get("seed").asLong();
@@ -82,7 +83,7 @@ public class LogGenerator {
                 file.delete();
         }
 
-        LocalDateTime start = LocalDateTime.now();
+        LocalDateTime start = startTime;
 
         List<LocalDateTime> timestamps = new ArrayList<>(totalLogs);
 
