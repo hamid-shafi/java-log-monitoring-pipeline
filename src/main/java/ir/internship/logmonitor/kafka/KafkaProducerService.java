@@ -3,6 +3,7 @@ package ir.internship.logmonitor.kafka;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
@@ -19,13 +20,14 @@ public class KafkaProducerService {
     }
 
     public void send(String key, String value) {
-        producer.send(
-                new ProducerRecord<>(
-                        KafkaTopics.LOGS,
-                        key,
-                        value
-                )
-        );
+        try {
+            RecordMetadata md = producer.send(
+                    new ProducerRecord<>(KafkaTopics.LOGS, key, value)
+            ).get();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void close() {

@@ -18,6 +18,25 @@ public class Database {
                         "hamid",
                 "1111"
         );
+
+        createTables();
+    }
+
+    private void createTables() throws SQLException {
+        String sql = """
+                CREATE TABLE IF NOT EXISTS alerts (
+                    id SERIAL PRIMARY KEY,
+                    rule_name TEXT NOT NULL,
+                    component TEXT,
+                    level TEXT,
+                    timestamp TIMESTAMP,
+                    description TEXT
+                );
+                """;
+
+        Statement statement = connection.createStatement();
+        statement.execute(sql);
+        statement.close();
     }
 
     public void insert(LogAlert alert) throws SQLException {
@@ -91,12 +110,15 @@ public class Database {
         ResultSet rs = s.executeQuery(sql);
 
         while (rs.next()) {
+            Timestamp ts = rs.getTimestamp("timestamp");
+            LocalDateTime ldt = (ts != null) ? ts.toLocalDateTime() : LocalDateTime.now();
+
             alerts.add(new LogAlert(
                     rs.getInt("id"),
                     rs.getString("rule_name"),
                     rs.getString("component"),
                     rs.getString("level"),
-                    rs.getTimestamp("timestamp").toLocalDateTime(),
+                    ldt,
                     rs.getString("description")
             ));
         }

@@ -29,7 +29,7 @@ public class FileIngester {
                 watchService,
                 StandardWatchEventKinds.ENTRY_CREATE
         );
-        while (true) {
+        while (running) {
             File[] files = new File("logs").listFiles();
             if (files != null) {
                 for (File file : files) {

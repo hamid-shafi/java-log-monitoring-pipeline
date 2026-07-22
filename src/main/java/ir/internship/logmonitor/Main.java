@@ -10,11 +10,11 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        /*
+
         LogGenerator gen = new LogGenerator();
         gen.generate();
-*/
 
+//        Thread.sleep(5000);
 
         FileIngester ingester = new FileIngester();
         KafkaConsumerService consumer = new KafkaConsumerService();
@@ -53,6 +53,8 @@ public class Main {
                 catch (Exception e) {}
             }
         }));
+
+
         ingesterThread.start();
         kafkaConsumerThread.start();
         api.start();

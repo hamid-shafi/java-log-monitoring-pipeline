@@ -12,14 +12,16 @@ import ir.internship.logmonitor.model.LogLevel;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Api {
     private final Database database;
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper()
+            .registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule())
+            .disable(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .enable(com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT);
 
     public Api() throws SQLException {
         database = new Database();
@@ -97,6 +99,7 @@ public class Api {
         server.createContext("/alerts", new HttpHandler() {
             public void handle(HttpExchange exchange) throws IOException {
                 try {
+                    System.out.println("GET /alerts");
                     String method = exchange.getRequestMethod();
 
                     if (method.equals("GET")) {
@@ -130,8 +133,18 @@ public class Api {
                     } else {
                         exchange.sendResponseHeaders(405, -1);
                     }
-                } catch (SQLException e) {
-                    exchange.sendResponseHeaders(500, -1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    String response = "Internal Server Error";
+
+                    exchange.sendResponseHeaders(
+                            500,
+                            response.length()
+                    );
+
+                    OutputStream os = exchange.getResponseBody();
+                    os.write(response.getBytes());
+                    os.close();
                 }
             }
         });

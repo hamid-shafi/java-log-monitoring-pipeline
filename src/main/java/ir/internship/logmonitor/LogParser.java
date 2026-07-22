@@ -9,7 +9,7 @@ public class LogParser {
         logFileName = logFileName.substring(0, logFileName.lastIndexOf('.'));
         String fileTimestampSample = "YYYY-MM-DD_HH-MM-SS";
         int lenOfFileTimestamp = fileTimestampSample.length();
-        String componentName = logFileName.substring(0, logFileName.length()-lenOfFileTimestamp+1);
+        String componentName = logFileName.substring(0, logFileName.length()-lenOfFileTimestamp);
         componentName = componentName.toUpperCase();
         return LogComponent.valueOf(componentName);
     }

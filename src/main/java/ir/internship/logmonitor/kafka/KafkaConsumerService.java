@@ -26,14 +26,21 @@ public class KafkaConsumerService {
         pro.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         pro.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         pro.put(ConsumerConfig.GROUP_ID_CONFIG, "rules-evaluator");
+        pro.put(
+                ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,
+                "earliest"
+        );
         consumer = new KafkaConsumer<>(pro);
         consumer.subscribe(List.of(KafkaTopics.LOGS));
+
+        consumer.poll(Duration.ofMillis(500));
     }
 
     public void consume() throws SQLException, IOException {
         RulesEvaluator evaluator = new RulesEvaluator();
-        while (true) {
+        while (running) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+
             for (ConsumerRecord<String, String> record : records) {
                 LogEvent event = LogParser.parse(LogComponent.valueOf(record.key()), record.value());
                 evaluator.process(event);
