@@ -1,8 +1,8 @@
-package ir.internship.logmonitor.model;
+    package ir.internship.logmonitor.model;
 
-public enum LogLevel {
-    DEBUG,
-    INFO,
-    WARN,
-    ERROR
-}
+    public enum LogLevel {
+        DEBUG,
+        INFO,
+        WARN,
+        ERROR
+    }

@@ -39,7 +39,7 @@ public class FileIngester {
 
             for (WatchEvent<?> event : key.pollEvents()) {
                 Path fileName = (Path)event.context();
-                processFile(new File("log", fileName.toString()));
+                processFile(new File("logs", fileName.toString()));
             }
 
             key.reset();

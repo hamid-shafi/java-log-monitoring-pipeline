@@ -3,6 +3,7 @@ package ir.internship.logmonitor.model;
 import java.time.LocalDateTime;
 
 public class LogAlert {
+    public final Integer id;
     public final String ruleName;
     public final String component;
     public final String level;
@@ -16,6 +17,18 @@ public class LogAlert {
             LocalDateTime timestamp,
             String description
     ) {
+        this(null, ruleName, component, level, timestamp, description);
+    }
+
+    public LogAlert(
+            Integer id,
+            String ruleName,
+            String component,
+            String level,
+            LocalDateTime timestamp,
+            String description
+    ) {
+        this.id = id;
         this.ruleName = ruleName;
         this.component = component;
         this.level = level;
