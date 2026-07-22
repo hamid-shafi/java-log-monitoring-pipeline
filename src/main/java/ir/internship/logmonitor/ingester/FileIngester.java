@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class FileIngester {
     private final KafkaProducerService pro = new KafkaProducerService();
+    public volatile boolean running = true;
 
     public void processFile(File file) throws IOException {
         List<String> lines = Files.readAllLines(file.toPath());
@@ -44,5 +45,10 @@ public class FileIngester {
 
             key.reset();
         }
+    }
+
+    public void close() {
+        running = false;
+        pro.close();
     }
 }

@@ -137,8 +137,10 @@ public class Api {
         });
 
         server.start();
-
-
         System.out.println("API started on port 8080");
+    }
+
+    public void close() throws Exception {
+        database.close();
     }
 }

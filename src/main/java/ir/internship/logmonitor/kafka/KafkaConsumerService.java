@@ -18,6 +18,7 @@ import java.util.Properties;
 
 public class KafkaConsumerService {
     private final KafkaConsumer<String, String> consumer;
+    public volatile boolean running = true;
 
     public KafkaConsumerService() {
         Properties pro = new Properties();
@@ -40,6 +41,9 @@ public class KafkaConsumerService {
         }
     }
 
-    public void close() { consumer.close(); }
+    public void close() {
+        running = false;
+        consumer.close();
+    }
 }
 
