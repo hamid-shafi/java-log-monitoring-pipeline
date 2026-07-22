@@ -2,6 +2,7 @@ package ir.internship.logmonitor.evaluator;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ir.internship.logmonitor.database.Database;
 import ir.internship.logmonitor.model.LogAlert;
 import ir.internship.logmonitor.model.LogComponent;
 import ir.internship.logmonitor.model.LogEvent;
@@ -9,14 +10,14 @@ import ir.internship.logmonitor.model.LogLevel;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Duration;
-import java.time.LocalDateTime;
+import java.sql.SQLException;
 import java.util.*;
 
 public class RulesEvaluator {
     private final List<SingleLogRule> singleLogs = new ArrayList<>();
     private final List<FrequencyRule> frequencies = new ArrayList<>();
     private final List<RateRule> rates = new ArrayList<>();
+    private final Database database;
 
     private void addSingleLogRule(JsonNode v) {
         singleLogs.add(new SingleLogRule(
@@ -42,7 +43,8 @@ public class RulesEvaluator {
         ));
     }
 
-    public RulesEvaluator() throws IOException {
+    public RulesEvaluator() throws IOException, SQLException {
+        database = new Database();
         ObjectMapper mapper = new ObjectMapper();
         InputStream config = getClass().getClassLoader().getResourceAsStream("rulesConfig.json");
         JsonNode root = mapper.readTree(config);
@@ -60,29 +62,25 @@ public class RulesEvaluator {
         }
     }
 
-    public void process(LogEvent event) {
+    public void process(LogEvent event) throws SQLException {
         for (SingleLogRule v : singleLogs) {
             LogAlert alert = v.process(event);
             if (alert != null) {
-                sendToSQL(alert);
+                database.insert(alert);
             }
         }
         for (FrequencyRule v : frequencies) {
             LogAlert alert = v.process(event);
             if (alert != null) {
-                sendToSQL(alert);
+                database.insert(alert);
             }
         }
         for (RateRule v : rates) {
             LogAlert alert = v.process(event);
             if (alert != null) {
-                sendToSQL(alert);
+                database.insert(alert);
             }
         }
-    }
-
-    private void sendToSQL(LogAlert a) {
-        // send data to Postgre SQL
     }
 
 }

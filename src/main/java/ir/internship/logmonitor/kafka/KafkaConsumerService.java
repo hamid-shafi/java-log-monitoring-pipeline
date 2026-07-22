@@ -11,6 +11,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
@@ -28,7 +29,7 @@ public class KafkaConsumerService {
         consumer.subscribe(List.of(KafkaTopics.LOGS));
     }
 
-    public void consume() throws IOException {
+    public void consume() throws SQLException, IOException {
         RulesEvaluator evaluator = new RulesEvaluator();
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
