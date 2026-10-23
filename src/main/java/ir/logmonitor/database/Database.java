@@ -1,8 +1,8 @@
-package ir.internship.logmonitor.database;
+package ir.logmonitor.database;
 
-import ir.internship.logmonitor.model.LogAlert;
-import ir.internship.logmonitor.model.LogComponent;
-import ir.internship.logmonitor.model.LogLevel;
+import ir.logmonitor.model.LogAlert;
+import ir.logmonitor.model.LogComponent;
+import ir.logmonitor.model.LogLevel;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -13,10 +13,13 @@ public class Database {
     private final Connection connection;
 
     public Database() throws SQLException {
+        String url = System.getenv("DATABASE_URL");
+        String user = System.getenv("DATABASE_USER");
+        String password = System.getenv("DATABASE_PASSWORD");
         connection = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/logmonitor",
-                        "hamid",
-                "1111"
+                url == null || url.isBlank() ? "jdbc:postgresql://localhost:5432/logmonitor" : url,
+                user == null || user.isBlank() ? "hamid" : user,
+                password == null || password.isBlank() ? "1111" : password
         );
 
         createTables();

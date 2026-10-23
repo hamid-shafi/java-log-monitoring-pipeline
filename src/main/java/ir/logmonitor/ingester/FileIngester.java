@@ -1,7 +1,7 @@
-package ir.internship.logmonitor.ingester;
+package ir.logmonitor.ingester;
 
-import ir.internship.logmonitor.LogParser;
-import ir.internship.logmonitor.kafka.KafkaProducerService;
+import ir.logmonitor.LogParser;
+import ir.logmonitor.kafka.KafkaProducerService;
 
 import java.io.File;
 import java.nio.file.*;

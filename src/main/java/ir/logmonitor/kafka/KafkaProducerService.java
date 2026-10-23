@@ -1,4 +1,4 @@
-package ir.internship.logmonitor.kafka;
+package ir.logmonitor.kafka;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -13,7 +13,9 @@ public class KafkaProducerService {
 
     public KafkaProducerService() {
         Properties pro = new Properties();
-        pro.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        String bootstrapServers = System.getenv("KAFKA_BOOTSTRAP_SERVERS");
+        pro.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
+                bootstrapServers == null || bootstrapServers.isBlank() ? "localhost:9092" : bootstrapServers);
         pro.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         pro.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         producer = new KafkaProducer<>(pro);

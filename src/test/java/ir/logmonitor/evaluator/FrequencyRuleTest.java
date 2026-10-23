@@ -1,9 +1,9 @@
-package ir.internship.logmonitor.evaluator;
+package ir.logmonitor.evaluator;
 
-import ir.internship.logmonitor.model.LogAlert;
-import ir.internship.logmonitor.model.LogComponent;
-import ir.internship.logmonitor.model.LogEvent;
-import ir.internship.logmonitor.model.LogLevel;
+import ir.logmonitor.model.LogAlert;
+import ir.logmonitor.model.LogComponent;
+import ir.logmonitor.model.LogEvent;
+import ir.logmonitor.model.LogLevel;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

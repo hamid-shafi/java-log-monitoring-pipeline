@@ -1,9 +1,9 @@
-package ir.internship.logmonitor.kafka;
+package ir.logmonitor.kafka;
 
-import ir.internship.logmonitor.LogParser;
-import ir.internship.logmonitor.evaluator.RulesEvaluator;
-import ir.internship.logmonitor.model.LogComponent;
-import ir.internship.logmonitor.model.LogEvent;
+import ir.logmonitor.LogParser;
+import ir.logmonitor.evaluator.RulesEvaluator;
+import ir.logmonitor.model.LogComponent;
+import ir.logmonitor.model.LogEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -22,7 +22,9 @@ public class KafkaConsumerService {
 
     public KafkaConsumerService() {
         Properties pro = new Properties();
-        pro.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        String bootstrapServers = System.getenv("KAFKA_BOOTSTRAP_SERVERS");
+        pro.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
+                bootstrapServers == null || bootstrapServers.isBlank() ? "localhost:9092" : bootstrapServers);
         pro.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         pro.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         pro.put(ConsumerConfig.GROUP_ID_CONFIG, "rules-evaluator");

@@ -1,9 +1,9 @@
-package ir.internship.logmonitor;
+package ir.logmonitor;
 
-import ir.internship.logmonitor.Generator.LogGenerator;
-import ir.internship.logmonitor.api.Api;
-import ir.internship.logmonitor.ingester.FileIngester;
-import ir.internship.logmonitor.kafka.KafkaConsumerService;
+import ir.logmonitor.Generator.LogGenerator;
+import ir.logmonitor.api.Api;
+import ir.logmonitor.ingester.FileIngester;
+import ir.logmonitor.kafka.KafkaConsumerService;
 
 import java.io.IOException;
 import java.sql.SQLException;

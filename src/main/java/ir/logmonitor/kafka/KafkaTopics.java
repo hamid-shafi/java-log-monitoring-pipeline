@@ -1,4 +1,4 @@
-package ir.internship.logmonitor.kafka;
+package ir.logmonitor.kafka;
 
 public final class KafkaTopics {
     private KafkaTopics() {}

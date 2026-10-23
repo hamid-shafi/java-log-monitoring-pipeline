@@ -1,4 +1,4 @@
-package ir.internship.logmonitor.model;
+package ir.logmonitor.model;
 
 public enum LogComponent {
     AUTH,           // login, signup, verification

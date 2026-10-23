@@ -1,7 +1,7 @@
-package ir.internship.logmonitor;
-import ir.internship.logmonitor.model.LogComponent;
-import ir.internship.logmonitor.model.LogEvent;
-import ir.internship.logmonitor.model.LogLevel;
+package ir.logmonitor;
+import ir.logmonitor.model.LogComponent;
+import ir.logmonitor.model.LogEvent;
+import ir.logmonitor.model.LogLevel;
 import java.time.LocalDateTime;
 
 public class LogParser {

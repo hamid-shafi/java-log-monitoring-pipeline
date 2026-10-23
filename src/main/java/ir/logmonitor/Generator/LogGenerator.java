@@ -1,4 +1,4 @@
-package ir.internship.logmonitor.Generator;
+package ir.logmonitor.Generator;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

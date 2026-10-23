@@ -40,11 +40,26 @@ Run the tests:
 mvn test
 ```
 
-Then run `ir.internship.logmonitor.Main` from your IDE. The HTTP API will be available at:
+Then run `ir.logmonitor.Main` from your IDE. The HTTP API will be available at:
 
 ```text
 http://localhost:8080/alerts
 ```
+
+## Docker and Liara
+
+The Dockerfile builds the application with Java 21 and exposes HTTP port `8080`. On Liara, choose a Docker service with port `8080` and set these environment variables:
+
+| Variable | Value |
+| --- | --- |
+| `DATABASE_URL` | PostgreSQL JDBC URL, such as `jdbc:postgresql://database-host:5432/logmonitor` |
+| `DATABASE_USER` | PostgreSQL username |
+| `DATABASE_PASSWORD` | PostgreSQL password |
+| `KAFKA_BOOTSTRAP_SERVERS` | Reachable Kafka broker addresses, such as `broker-host:9092` |
+
+Unset or blank values retain the existing local development defaults. PostgreSQL and Kafka must be reachable from the application container; `localhost` refers to that container. This Dockerfile runs only the Java application, so it does not start the services from Docker Compose. Kafka must advertise reachable broker addresses and provide the `logs` topic. The current Kafka client configuration uses plaintext connections without SASL authentication.
+
+The HTTP endpoint `/` confirms that the API is running; it does not verify the complete Kafka processing pipeline.
 
 ## Project Background
 

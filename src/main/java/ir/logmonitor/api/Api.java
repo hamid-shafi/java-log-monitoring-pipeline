@@ -1,13 +1,13 @@
-package ir.internship.logmonitor.api;
+package ir.logmonitor.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import ir.internship.logmonitor.database.Database;
-import ir.internship.logmonitor.model.LogAlert;
-import ir.internship.logmonitor.model.LogComponent;
-import ir.internship.logmonitor.model.LogLevel;
+import ir.logmonitor.database.Database;
+import ir.logmonitor.model.LogAlert;
+import ir.logmonitor.model.LogComponent;
+import ir.logmonitor.model.LogLevel;
 
 import java.io.IOException;
 import java.io.OutputStream;
