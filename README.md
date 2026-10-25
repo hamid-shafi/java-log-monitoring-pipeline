@@ -1,6 +1,6 @@
 # Log Monitoring and Alerting Pipeline
 
-A Java application that monitors log files, streams log events through Apache Kafka, evaluates configurable alert rules, stores alerts in PostgreSQL, and exposes them through an HTTP API.
+A backend engineering internship project built with Java. The application monitors log files, streams log events through Apache Kafka, evaluates configurable alert rules, stores alerts in PostgreSQL, and exposes them through an HTTP API.
 
 ## How It Works
 
@@ -46,9 +46,9 @@ Then run `ir.logmonitor.Main` from your IDE. The HTTP API will be available at:
 http://localhost:8080/alerts
 ```
 
-## Docker and Liara
+## Docker Deployment
 
-The Dockerfile builds the application with Java 21 and exposes HTTP port `8080`. On Liara, choose a Docker service with port `8080` and set these environment variables:
+The Dockerfile builds the application with Java 21 and exposes HTTP port `8080`. Configure these environment variables for your deployment:
 
 | Variable | Value |
 | --- | --- |
@@ -61,8 +61,8 @@ Unset or blank values retain the existing local development defaults. PostgreSQL
 
 The HTTP endpoint `/` confirms that the API is running; it does not verify the complete Kafka processing pipeline.
 
-## Project Background
+## Internship Context
 
-This project was developed during my internship from an open-ended backend engineering assignment. It was my first substantial end-to-end Java application and my first experience using Git throughout a complete development lifecycle.
+This project was developed as an open-ended backend engineering assignment during my internship. It was my first substantial end-to-end Java application and my first experience using Git throughout a complete development lifecycle.
 
 The main processing flow was specified, while implementation details such as the application structure, database schema, rule configuration format, alert evaluation logic, and API design were left open.
